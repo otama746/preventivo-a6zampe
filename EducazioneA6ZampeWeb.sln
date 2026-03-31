@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36915.13 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducazioneA6ZampeWeb", "EducazioneA6ZampeWeb\EducazioneA6ZampeWeb.csproj", "{784C6A01-6147-4163-870B-FC1592C06ABF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{784C6A01-6147-4163-870B-FC1592C06ABF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{784C6A01-6147-4163-870B-FC1592C06ABF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{784C6A01-6147-4163-870B-FC1592C06ABF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{784C6A01-6147-4163-870B-FC1592C06ABF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {339AF85D-F241-400C-9876-ACB51C8DDD3C}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,139 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.Components.Web
+@using EducazioneA6ZampeApp.Services
+@rendermode @(new Microsoft.AspNetCore.Components.Web.InteractiveServerRenderMode())
+@inject DistanceService Service
+
+<PageTitle>Preventivo</PageTitle>
+
+<h1>Calcolo costo trasferta</h1>
+
+<div class="search-container">
+    <input @bind="City" @bind:event="oninput" @onkeyup="Filter" placeholder="Inserisci città" class="form-control" />
+
+    @if (FilteredCities.Any())
+    {
+        <ul class="suggestions-list">
+            @foreach (var c in FilteredCities)
+            {
+                <li @onclick="() => SelectCity(c)">@c</li>
+            }
+        </ul>
+    }
+</div>
+
+<button class="btn btn-primary mt-3" @onclick="Calculate">Calcola costo</button>
+
+@if (!string.IsNullOrEmpty(Result))
+{
+    <div class="mt-4">
+        <p style="color: red; font-size: 18px; white-space: pre-wrap;">@Result</p>
+        <p style="color: green; font-size: 18px; font-weight: bold; white-space: pre-wrap;">@ResultTotale</p>
+
+        @* --- MODIFICA 1: Aggiunta dell'immagine condizionale --- *@
+        @if (showBonusImage)
+        {
+            <div class="mt-3">
+                <img src="cane_felice.png" alt="Incontro Gratuito" style="max-width: 300px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" />
+            </div>
+        }
+    </div>
+}
+
+<style>
+    .search-container {
+        position: relative;
+        width: 300px;
+    }
+
+    .suggestions-list {
+        position: absolute;
+        background: white;
+        border: 1px solid #ccc;
+        width: 100%;
+        list-style: none;
+        padding: 0;
+        z-index: 100;
+    }
+
+        .suggestions-list li {
+            padding: 8px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+
+            .suggestions-list li:hover {
+                background-color: #f0f0f0;
+            }
+</style>
+
+<div class="text-center mb-4">
+    <img src="ed_6_logo_sfondo_trasp2.png" alt="Logo Educazione a 6 zampe" style="height: 300px; width: auto;" />
+</div>
+
+@code {
+    private string City = "";
+    private string Result = "";
+    private string ResultTotale = "";
+    private List<string> FilteredCities = new();
+
+    // --- MODIFICA 2: Nuova variabile per controllare l'immagine ---
+    private bool showBonusImage = false;
+
+    void Filter()
+    {
+        if (string.IsNullOrWhiteSpace(City))
+        {
+            FilteredCities.Clear();
+            Result = "";
+            ResultTotale = "";
+            showBonusImage = false; // Reset se l'input è vuoto
+        }
+        else
+        {
+            showBonusImage = false; // Nascondi mentre l'utente digita una nuova città
+            FilteredCities = Service.Cities
+                .Where(c => c.Name.Contains(City, StringComparison.OrdinalIgnoreCase))
+                .Select(c => c.Name)
+                .OrderBy(x => x)
+                .Take(5)
+                .ToList();
+        }
+    }
+
+    void SelectCity(string c)
+    {
+        City = c;
+        FilteredCities.Clear();
+    }
+
+    void Calculate()
+    {
+        var cityData = Service.FindCity(City);
+
+        if (cityData == null)
+        {
+            Result = "Città non trovata";
+            ResultTotale = "La tua città è fuori dalla nostra area di competenza \nContatta il 3492528859 per un programma PERSONALIZZATO ! ";
+            showBonusImage = false;
+            return;
+        }
+
+        if (cityData.Name == "Molfetta" || cityData.Name == "Giovinazzo" || cityData.Name == "Bisceglie" || cityData.Name == "Terlizzi")
+        {
+            Result = $"Totale / Lezione: 25€\nContatta il 3492528859";
+            ResultTotale = "";
+            showBonusImage = true; // Mostra l'immagine
+            return;
+        }
+
+        double extra = Service.CalculateExtra(cityData.DistanceKm);
+        double tot = extra + 25;
+
+        Result = $"Km da percorrere: {cityData.DistanceKm}\nExtra Per Trasferta a Lezione: {extra:0.00}€";
+        ResultTotale = $"Totale/Lezione: {tot:0.00}€\nContatta il 3492528859 per un percorso personalizzato!!";
+
+        showBonusImage = true; // Mostra l'immagine
+        FilteredCities.Clear();
+    }
+}
