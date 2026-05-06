@@ -14,7 +14,7 @@ namespace EducazioneA6ZampeApp.Services
         public List<CityDistanceModel> Cities { get; } =
             [new() { Name = "Altamura", DistanceKm = 63 },
             new() { Name = "Andria", DistanceKm = 30 },
-            new() { Name = "Bisceglie", DistanceKm = 1 },
+            new() { Name = "Bisceglie", DistanceKm = 10 },
             new() { Name = "Barletta", DistanceKm = 25 },
             new() { Name = "Bari", DistanceKm = 35 },
             new() { Name = "Bitonto", DistanceKm = 18 },
@@ -25,7 +25,7 @@ namespace EducazioneA6ZampeApp.Services
             new() { Name = "Monopoli", DistanceKm = 73 },
             new() { Name = "Modugno", DistanceKm = 25 },
             new() { Name = "Trani", DistanceKm = 15 },
-            new() { Name = "Terlizzi", DistanceKm = 1 },
+            new() { Name = "Terlizzi", DistanceKm = 10 },
             new() { Name = "Triggiano", DistanceKm = 30 },
             new() { Name = "Putignano", DistanceKm = 70 },
             new() { Name = "Santeramo In Colle", DistanceKm = 70 },
