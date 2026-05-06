@@ -9,7 +9,7 @@ namespace EducazioneA6ZampeApp.Services
 {
     public class DistanceService
     {
-        const double CostoKm = 0.55;
+        const double CostoKm = 0.60;
         
         public List<CityDistanceModel> Cities { get; } =
             [new() { Name = "Altamura", DistanceKm = 63 },
